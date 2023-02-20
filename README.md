@@ -6,3 +6,4 @@
 
 **Note. You'll need to run npm install & npm innit
 
+**You will need to create two .env files for your project: .env.test and .env.development. Into development add PGDATABASE=nc_games and in your test PGDATABASE=nc_games_test;
