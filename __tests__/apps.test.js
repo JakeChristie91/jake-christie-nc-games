@@ -6,7 +6,7 @@ const connection = require('../db/connection');
 const seed = require('../db/seeds/seed');
 const testData = require('../db/data/test-data');
 
-beforeEach(() => seed(testData, ));
+beforeEach(() => seed(testData));
 afterAll(() => connection.end());
 
 describe('app', () => {
@@ -14,6 +14,7 @@ describe('app', () => {
         test('200: it responds with the message all ok', () => {
             return request(app)
             .get("/api")
+            .expect(200)
             .then((response) => {
                 expect(response.body.message).toBe("all ok");
             })
@@ -25,6 +26,7 @@ describe('app', () => {
             .get('/api/categories')
             .expect(200)
             .then(({ body }) => {
+                expect(body.categories.length).toBe(4)
                 body.categories.forEach((category) => {
                     expect(category).toEqual(
                         expect.objectContaining({
@@ -35,4 +37,14 @@ describe('app', () => {
             });
         });
     });
+    describe('ERRORS', () => {
+        test('status:404, responds with an error', () => {
+            return request(app)
+              .get('/api/categori')
+              .expect(404)
+              .then(({body}) => {
+                expect(body.msg).toBe('404 Path Not Found');
+                });
+            });
+        });
 });
