@@ -33,17 +33,14 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - Status: ???
 
----
 
 ## Available Routes
 
 ### GET `/api/categories`
 
--
 
 ### GET `/api/users/:username`
 
--
 
 ### GET `/api/reviews/:review_id`
 
