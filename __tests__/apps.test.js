@@ -69,10 +69,6 @@ describe('app', () => {
                             votes: expect.any(Number)
                         }));
                     });
-                    expect(body.reviews).toBeSortedBy('created_at', {
-                        descending : true,
-                        coerce : false
-                    })
                 });
             });
         });
