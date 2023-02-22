@@ -33,17 +33,30 @@ Bear in mind, handling bad inputs from clients doesn't necessarily have to lead 
 
 - Status: ???
 
----
+--- app.get('/', (req, res) => {
+    throw new Error('BROKEN') // Express will catch this on its own.
+})
 
 ## Available Routes
 
 ### GET `/api/categories`
 
--
+- app.get('/api/categories', (req, res, next) => {
+  fs.readFile('/file-does-not-exist', (err, data) => {
+    if (err) {
+      next(err) // Pass errors to Express.
+    } else {
+      res.send(data)
+    }
+  })
+})
 
 ### GET `/api/users/:username`
 
--
+- app.get('/user/:id', async (req, res, next) => {
+  const user = await getUserById(req.params.id)
+  res.send(user)
+})
 
 ### GET `/api/reviews/:review_id`
 
