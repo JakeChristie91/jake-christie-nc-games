@@ -1,4 +1,5 @@
-const fetchReviews = require('../models/reviews-model');
+const reviews = require('../db/data/test-data/reviews');
+const { fetchReviews, fetchReviewsByID } = require('../models/reviews-model');
 
 function selectAllReviews(request, response, next) {
     fetchReviews()
@@ -9,5 +10,16 @@ function selectAllReviews(request, response, next) {
     })
 };
 
+function selectReviewById(request, response, next) { 
+    
+    const { review_id } = request.params;
+        fetchReviewsByID(review_id).then((review) => {
+        response.status(200).send({review});
+    }).catch((error)=>{
+        next(error);
+    })   
+}
+    
 
-module.exports = selectAllReviews
+
+module.exports = { selectAllReviews, selectReviewById }
