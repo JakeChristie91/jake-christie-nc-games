@@ -118,26 +118,26 @@ describe('GET/api/reviews/:review_id', () => {
               });
         });    
 });
-    describe('ERRORS02', () => {
-        test('custom status:404, responds with a custom error when passed a bad user ID', () => {
-            return request(app)
+describe('ERRORS02', () => {
+    test('custom status:404, responds with a custom error when passed a bad user ID', () => {
+        return request(app)
                .get('/api/reviews/999999999')
                .expect(404)
                .then(({body}) => {
                 expect(body.msg).toBe('No user found for review_id');
-                });
             });
         });
-    describe('ERRORS03', () => {
-        test('custom status:400, responds with a custom error when passed a user ID which is not a number', () => {
-            return request(app)
+    });
+describe('ERRORS03', () => {
+    test('custom status:400, responds with a custom error when passed a user ID which is not a number', () => {
+        return request(app)
                .get('/api/reviews/df')
                .expect(400)
                .then(({body}) => {
                 expect(body.msg).toBe('Invalid input');
-                });
             });
         });
+    });
  
 
     
