@@ -77,7 +77,7 @@ describe('app', () => {
 
 
 describe('GET/api/reviews/:review_id', () => {
-    it("gets an id number and receives a review_id object", () => {
+    it("01: gets an id number and receives a review_id object", () => {
         return request(app)
         .get("/api/reviews/2")
               .expect(200)
@@ -97,7 +97,27 @@ describe('GET/api/reviews/:review_id', () => {
                 }));
               });
         });
-    });
+    it("02: gets an id number and receives a full review_id object with all information inside", () => {
+        return request(app)
+              .get("/api/reviews/3")
+              .expect(200)
+              .then(({ body }) => {
+                  expect(body.review.review_id).toBe(3);
+                  expect(body.review).toEqual({
+                        review_id: 3,
+                        title: 'Ultimate Werewolf',
+                        designer: 'Akihisa Okui',
+                        owner: 'bainesface',
+                        review_img_url:
+                          'https://images.pexels.com/photos/5350049/pexels-photo-5350049.jpeg?w=700&h=700',
+                        review_body: "We couldn't find the werewolf!",
+                        category: 'social deduction',
+                        created_at: "2021-01-18T10:01:41.251Z",
+                        votes: 5
+                      });
+              });
+        });    
+});
     describe('ERRORS02', () => {
         test('custom status:404, responds with a custom error when passed a bad user ID', () => {
             return request(app)
@@ -105,6 +125,16 @@ describe('GET/api/reviews/:review_id', () => {
                .expect(404)
                .then(({body}) => {
                 expect(body.msg).toBe('No user found for review_id');
+                });
+            });
+        });
+    describe('ERRORS03', () => {
+        test('custom status:400, responds with a custom error when passed a user ID which is not a number', () => {
+            return request(app)
+               .get('/api/reviews/df')
+               .expect(400)
+               .then(({body}) => {
+                expect(body.msg).toBe('Invalid input');
                 });
             });
         });

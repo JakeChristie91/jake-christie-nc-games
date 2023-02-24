@@ -1,4 +1,3 @@
-const fs = require('fs/promises');
 const reviews = require('../db/data/test-data/reviews');
 const { fetchReviews, fetchReviewsByID } = require('../models/reviews-model');
 

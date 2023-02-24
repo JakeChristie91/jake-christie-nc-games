@@ -13,10 +13,7 @@ function fetchReviewsByID(review_id) { return db.query(`SELECT * FROM reviews
 WHERE review_id = $1;`, [review_id]).then((response) => {
     const review = response.rows[0];
     if(!review) {
-        return Promise.reject({
-            status: 404,
-            msg: 'No user found for review_id',
-        })
+        return Promise.reject('No user found for review_id')
     }
     return review;
 });

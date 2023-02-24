@@ -20,11 +20,15 @@ app.get('/api/reviews', selectAllReviews);
 app.get('/api/reviews/:review_id', selectReviewById);
 
 app.use((error, request, response, next) => {
-    if (404 && 'No user found for review_id') {
-      response.status(404).send({ msg: 'No user found for review_id'});
+    if (error === 'No user found for review_id') {
+      response.status(404).send({msg: 'No user found for review_id'});
     } else next(error)
 })
-
+app.use((error, request, response, next) => {
+    if (error.code === '22P02') {
+        response.status(400).send({ msg: 'Invalid input' });
+      } else next(error);
+})
 app.use((error, request, response, next) => {
     console.log(error);
     response.status(500).send({ msg : 'Server Error' });
